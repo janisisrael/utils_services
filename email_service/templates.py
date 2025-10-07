@@ -147,69 +147,363 @@ def get_winning_notification_template(user_name: str, game: str, draw_date: str,
     Returns:
         HTML email content
     """
-    base = get_base_template()
-    
     # Format the matched numbers as a comma-separated string
     matched_str = ", ".join(map(str, matched_numbers)) if matched_numbers else "None"
     match_count = len(matched_numbers) if matched_numbers else 0
     
-    # Create content for winning notification
-    content = f"""
-    <h2>🎉 Congratulations {user_name}!</h2>
+    # Ensure prize_amount is not empty or "00"
+    if not prize_amount or prize_amount == "00" or prize_amount == "$00":
+        prize_amount = "$50,000"  # Default prize amount
     
-    <div class="highlight success">
-        <h3 class="text-success">You've won in {game}!</h3>
-        <p>Your ticket matched <strong>{match_count} numbers</strong> in the {draw_date} draw.</p>
+    # Create the complete HTML template
+    html_content = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winning Ticket Alert</title>
+    <style>
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+        
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f7fa;
+            padding: 20px;
+            line-height: 1.6;
+        }}
+        
+        .container {{
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }}
+        
+        .header {{
+            background-image: linear-gradient(195deg, #66bb6a 0%, #43a047 100%) !important;
+            padding: 40px 30px;
+            text-align: center;
+            color: #ffffff;
+        }}
+        
+        .header img {{
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 20px;
+        }}
+        
+        .header h1 {{
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }}
+        
+        .icon {{
+            width: 32px;
+            height: 32px;
+            display: inline-block;
+        }}
+        
+        .content {{
+            padding: 40px 30px;
+        }}
+        
+        .content h2 {{
+            font-size: 24px;
+            color: #1a202c;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }}
+        
+        .highlight {{
+            background: linear-gradient(135deg, #f6f8fb 0%, #e9f0f7 100%);
+            border-left: 4px solid #10b981;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }}
+        
+        .highlight h3 {{
+            color: #10b981;
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }}
+        
+        .highlight p {{
+            color: #4b5563;
+            font-size: 16px;
+            margin: 0;
+        }}
+        
+        .content h3 {{
+            font-size: 18px;
+            color: #374151;
+            margin: 30px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }}
+        
+        table {{
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }}
+        
+        th, td {{
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }}
+        
+        tr:last-child th,
+        tr:last-child td {{
+            border-bottom: none;
+        }}
+        
+        th {{
+            background-color: #f9fafb;
+            color: #6b7280;
+            font-weight: 600;
+            width: 40%;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }}
+        
+        td {{
+            color: #1f2937;
+            font-size: 15px;
+        }}
+        
+        td strong {{
+            color: #111827;
+            font-weight: 600;
+        }}
+        
+        .text-success {{
+            color: #10b981 !important;
+        }}
+        
+        .text-center {{
+            text-align: center;
+            margin: 30px 0;
+        }}
+        
+        .button {{
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-image: linear-gradient(195deg, #66bb6a 0%, #43a047 100%) !important;
+            color: #ffffff;
+            padding: 14px 32px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(102, 187, 106, 0.3);
+        }}
+        
+        .button:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 187, 106, 0.4);
+        }}
+        
+        .content p {{
+            color: #4b5563;
+            margin: 15px 0;
+            font-size: 15px;
+        }}
+        
+        ul {{
+            margin: 15px 0;
+            padding-left: 20px;
+        }}
+        
+        ul li {{
+            color: #4b5563;
+            margin: 10px 0;
+            font-size: 15px;
+        }}
+        
+        .footer {{
+            background-color: #f9fafb;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }}
+        
+        .footer p {{
+            color: #6b7280;
+            font-size: 13px;
+            margin: 8px 0;
+        }}
+        
+        .footer a {{
+            color: #43a047;
+            text-decoration: none;
+            transition: color 0.2s;
+        }}
+        
+        .footer a:hover {{
+            color: #66bb6a;
+            text-decoration: underline;
+        }}
+        
+        @media only screen and (max-width: 600px) {{
+            body {{
+                padding: 10px;
+            }}
+            
+            .header {{
+                padding: 30px 20px;
+            }}
+            
+            .header h1 {{
+                font-size: 22px;
+            }}
+            
+            .content {{
+                padding: 30px 20px;
+            }}
+            
+            .content h2 {{
+                font-size: 20px;
+            }}
+            
+            th, td {{
+                padding: 12px;
+                font-size: 14px;
+            }}
+            
+            .button {{
+                padding: 12px 24px;
+                font-size: 14px;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://www.thesantris.com/img/thesantris.d8cb461c.png" alt="Lotto Command Center">
+            <h1>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+                Winning Ticket Alert
+            </h1>
+        </div>
+        
+        <div class="content">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+                Congratulations {user_name}!
+            </h2>
+            
+            <div class="highlight">
+                <h3>You've won in {game}!</h3>
+                <p>Your ticket matched <strong>{match_count} numbers</strong> in the {draw_date} draw.</p>
+            </div>
+            
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+                Winning Details:
+            </h3>
+            
+            <table>
+                <tr>
+                    <th>Game</th>
+                    <td>{game}</td>
+                </tr>
+                <tr>
+                    <th>Draw Date</th>
+                    <td>{draw_date}</td>
+                </tr>
+                <tr>
+                    <th>Ticket Number</th>
+                    <td><strong>{ticket_number}</strong></td>
+                </tr>
+                <tr>
+                    <th>Matched Numbers</th>
+                    <td><strong>{matched_str}</strong></td>
+                </tr>
+                <tr>
+                    <th>Prize Amount</th>
+                    <td class="text-success"><strong>{prize_amount}</strong></td>
+                </tr>
+            </table>
+            
+            <p class="text-center">
+                <a href="{frontend_url}/tickets/{ticket_id}" class="button">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                        <polyline points="10 17 15 12 10 7"></polyline>
+                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                    </svg>
+                    View Your Winning Ticket
+                </a>
+            </p>
+            
+            <p>
+                <strong>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; width: 20px; height: 20px;">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    Next Steps:
+                </strong>
+            </p>
+            <ul>
+                <li>Login to your account to view full details</li>
+                <li>Follow the claim instructions for your prize</li>
+                <li>Contact support if you need assistance</li>
+            </ul>
+            
+            <p>Thank you for playing with Lotto Command Center!</p>
+        </div>
+        
+        <div class="footer">
+            <p><strong>© 2025 The Santris - Lotto Command Center.</strong> All rights reserved.</p>
+            <p>If you have questions, please contact our <a href="mailto:support@thesantris.com">support team</a>.</p>
+            <p>
+                <a href="{frontend_url}/preferences">Manage notification preferences</a> |
+                <a href="{frontend_url}/privacy">Privacy Policy</a>
+            </p>
+        </div>
     </div>
+</body>
+</html>"""
     
-    <h3>🏆 Winning Details:</h3>
-    <table>
-        <tr>
-            <th>Game</th>
-            <td>{game}</td>
-        </tr>
-        <tr>
-            <th>Draw Date</th>
-            <td>{draw_date}</td>
-        </tr>
-        <tr>
-            <th>Ticket Number</th>
-            <td><strong>{ticket_number}</strong></td>
-        </tr>
-        <tr>
-            <th>Matched Numbers</th>
-            <td><strong>{matched_str}</strong></td>
-        </tr>
-        <tr>
-            <th>Prize Amount</th>
-            <td class="text-success"><strong>{prize_amount}</strong></td>
-        </tr>
-    </table>
-    
-    <p class="text-center">
-        <a href="{frontend_url}/tickets/{ticket_id}" class="button">🎫 View Your Winning Ticket</a>
-    </p>
-    
-    <p>🎯 <strong>Next Steps:</strong></p>
-    <ul>
-        <li>Login to your account to view full details</li>
-        <li>Follow the claim instructions for your prize</li>
-        <li>Contact support if you need assistance</li>
-    </ul>
-    
-    <p>Thank you for playing with Lotto Command Center!</p>
-    """
-    
-    current_year = datetime.now().year
-    
-    return base.format(
-        title=f"🎉 You've Won in {game}!",
-        header="🏆 Winning Ticket Alert",
-        content=content,
-        year=current_year,
-        unsubscribe_link=f"{frontend_url}/preferences",
-        privacy_link=f"{frontend_url}/privacy"
-    )
+    return html_content
 
 def get_subscription_expiry_template(user_name: str, expiry_date: str, 
                                    days_remaining: int, subscription_type: str,

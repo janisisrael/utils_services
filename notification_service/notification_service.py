@@ -389,3 +389,4 @@ class NotificationService(BaseNotificationService):
         except Exception as e:
             self.logger.error(f"Error stopping notification service: {e}")
             return False
+

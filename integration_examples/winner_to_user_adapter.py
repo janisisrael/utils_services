@@ -368,3 +368,4 @@ if __name__ == "__main__":
         print("❌ Patching failed")
     
     print("\n✅ Adapter example completed!")
+

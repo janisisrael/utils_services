@@ -395,3 +395,4 @@ class EmailService(BaseNotificationService):
         except Exception as e:
             self.logger.error(f"Error stopping email service: {e}")
             return False
+

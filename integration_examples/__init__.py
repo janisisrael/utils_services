@@ -66,3 +66,4 @@ __all__ = [
     'patch_notifications',
     'unpatch_notifications'
 ]
+

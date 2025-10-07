@@ -64,3 +64,4 @@ __all__ = [
     'create_dispatcher',
     'send_winner_notification'
 ]
+

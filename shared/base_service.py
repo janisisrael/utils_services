@@ -210,3 +210,4 @@ class ServiceRegistry:
                     'error': str(e)
                 }
         return health_status
+

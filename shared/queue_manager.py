@@ -277,3 +277,4 @@ class QueueManager:
         
         task = QueueTask(task_id, data, priority)
         return self.queues[queue_name].add(task)
+
