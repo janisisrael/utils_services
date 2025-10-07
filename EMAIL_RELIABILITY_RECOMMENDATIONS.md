@@ -361,3 +361,4 @@ v=DMARC1; p=quarantine; rua=mailto:dmarc@thesantris.com
 
 This will give you **95%+ delivery rates** and **professional email reliability** without major code changes to Phase 1.
 
+

@@ -437,3 +437,4 @@ def send_new_draw_notification(user_email: str, game: str, draw_date: str,
         logger.error(f"Error sending new draw notification: {e}")
         return False
 
+

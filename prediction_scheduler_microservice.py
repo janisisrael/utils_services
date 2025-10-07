@@ -314,3 +314,4 @@ if __name__ == '__main__':
         logger.error(f"❌ Error starting Prediction Scheduler: {e}")
         prediction_scheduler.stop_scheduler()
 
+

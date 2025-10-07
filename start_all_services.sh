@@ -131,3 +131,4 @@ echo "To test email service:"
 echo "  cd $UTILS_SERVICES_DIR"
 echo "  python3 test_email_microservice.py"
 
+
