@@ -438,3 +438,5 @@ def send_new_draw_notification(user_email: str, game: str, draw_date: str,
         return False
 
 
+
+

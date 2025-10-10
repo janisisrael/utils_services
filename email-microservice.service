@@ -30,3 +30,5 @@ ReadWritePaths=/home/ubuntu/LottoCommandCentre/Utils_services
 WantedBy=multi-user.target
 
 
+
+

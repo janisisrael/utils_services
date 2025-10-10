@@ -1,0 +1,50 @@
+[
+  {
+    "test": "Health Check",
+    "success": true,
+    "message": "Service is healthy - Port: 7002",
+    "timestamp": "2025-10-10T02:28:48.268574"
+  },
+  {
+    "test": "Status Check",
+    "success": true,
+    "message": "Active connections: 0",
+    "timestamp": "2025-10-10T02:28:48.272560"
+  },
+  {
+    "test": "Connections Check",
+    "success": true,
+    "message": "Active: 0",
+    "timestamp": "2025-10-10T02:28:48.275907"
+  },
+  {
+    "test": "Send Notification",
+    "success": true,
+    "message": "Sent to user 999",
+    "timestamp": "2025-10-10T02:28:48.279526"
+  },
+  {
+    "test": "Broadcast Notification",
+    "success": true,
+    "message": "Sent to 0 users",
+    "timestamp": "2025-10-10T02:28:48.282938"
+  },
+  {
+    "test": "Winner Notification",
+    "success": true,
+    "message": "Winner notification sent: Notification queued for offline user",
+    "timestamp": "2025-10-10T02:28:48.288344"
+  },
+  {
+    "test": "Queue Check",
+    "success": true,
+    "message": "Queue for user 999: 1 notifications",
+    "timestamp": "2025-10-10T02:28:48.291914"
+  },
+  {
+    "test": "WebSocket Connection",
+    "success": true,
+    "message": "Successfully connected",
+    "timestamp": "2025-10-10T02:28:50.303931"
+  }
+]
