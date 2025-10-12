@@ -654,10 +654,14 @@ def get_welcome_registration_template(user_name, email):
             
             /* Header */
             .header {{
-                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-                padding: 40px 30px;
+                background-image: linear-gradient(195deg, #667eea 0%, #764ba2 100%) !important;
+                padding: 20px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                color: #ffffff;
+                flex-direction: column;
                 text-align: center;
-                color: white;
             }}
             
             .logo {{
