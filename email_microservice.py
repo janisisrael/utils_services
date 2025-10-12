@@ -224,12 +224,18 @@ class EmailService:
                 }
             
             if not self.sendgrid_available:
-                logger.warning("SendGrid not available")
-                return {
-                    'success': False,
-                    'error': 'SendGrid not available',
-                    'service': 'email_service'
-                }
+                logger.warning("SendGrid not available, using SMTP fallback")
+                # Don't return error - try SMTP fallback instead
+                if self.fallback_enabled:
+                    logger.info("🔄 Attempting SMTP fallback...")
+                    fallback_result = self._send_fallback_email(recipient, subject, html_content, plain_text)
+                    return fallback_result
+                else:
+                    return {
+                        'success': False,
+                        'error': 'SendGrid not available and fallback disabled',
+                        'service': 'email_service'
+                    }
             
             # Create SendGrid email
             from_email = Email(self.sender_email, self.sender_name)
