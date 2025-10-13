@@ -41,7 +41,7 @@ def init_email_service():
     """Initialize the email service"""
     global email_service
     try:
-        from .email_service import EmailService
+        from email_service import EmailService
         email_service = EmailService(EMAIL_CONFIG)
         success = email_service.start()
         if success:
@@ -110,7 +110,7 @@ def send_email():
             }), 400
         
         # Create email task
-        from .email_service import EmailTask
+        from email_service import EmailTask
         email_task = EmailTask(
             recipient_email=data['recipient'],
             subject=data['subject'],
@@ -173,7 +173,7 @@ def send_winner_notification():
             }), 400
         
         # Render template using Phase1 templates
-        from .templates import render_template
+        from templates import render_template
         try:
             html_content = render_template('winner_notification', data)
             if not html_content:
@@ -183,7 +183,7 @@ def send_winner_notification():
                 }), 400
             
             # Create email task with rendered template
-            from .email_service import EmailTask
+            from email_service import EmailTask
             email_task = EmailTask(
                 recipient_email=data['user_email'],
                 subject=f"🎉 Congratulations! You've Won in {data['game']}!",
@@ -246,7 +246,7 @@ def get_metrics():
 def list_templates():
     """List available email templates"""
     try:
-        from .templates import get_template_info
+        from templates import get_template_info
         template_info = get_template_info()
         return jsonify({
             'status': 'success',
@@ -287,7 +287,7 @@ def send_subscription_expiry():
             }), 400
         
         # Render template
-        from .templates import render_template
+        from templates import render_template
         try:
             html_content = render_template('subscription_expiry', data)
             if not html_content:
@@ -297,7 +297,7 @@ def send_subscription_expiry():
                 }), 400
             
             # Create email task
-            from .email_service import EmailTask
+            from email_service import EmailTask
             email_task = EmailTask(
                 recipient_email=data['user_email'],
                 subject=f"📅 Your {data['subscription_type']} Subscription Expires Soon",
@@ -360,7 +360,7 @@ def send_draw_results():
             }), 400
         
         # Render template
-        from .templates import render_template
+        from templates import render_template
         try:
             html_content = render_template('draw_results', data)
             if not html_content:
@@ -370,7 +370,7 @@ def send_draw_results():
                 }), 400
             
             # Create email task
-            from .email_service import EmailTask
+            from email_service import EmailTask
             email_task = EmailTask(
                 recipient_email=data['user_email'],
                 subject=f"🎲 New {data['game']} Results - {data['draw_date']}",

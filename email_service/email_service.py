@@ -5,9 +5,9 @@ Handles all email notifications with queue management, retry logic, and rate lim
 
 import smtplib
 import logging
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
-from email.mime.base import MimeBase
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
 from email import encoders
 from datetime import datetime
 from typing import Dict, Any, Optional, List
@@ -64,7 +64,7 @@ class EmailTemplateManager:
     def __init__(self):
         self.templates = {
             'winner_notification': {
-                'subject': '🎉 Congratulations! You Have a Winning Ticket!',
+                'subject': 'Congratulations! You Have a Winning Ticket!',
                 'html': '''
                 <html>
                 <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -303,18 +303,18 @@ class EmailService(BaseNotificationService):
         """Send email via SMTP"""
         try:
             # Create message
-            msg = MimeMultipart('alternative')
+            msg = MIMEMultipart('alternative')
             msg['From'] = f"{self.sender_name} <{self.sender_email}>"
             msg['To'] = recipient
             msg['Subject'] = subject
             
             # Add text and HTML parts
             if body_text:
-                part1 = MimeText(body_text, 'plain')
+                part1 = MIMEText(body_text, 'plain')
                 msg.attach(part1)
             
             if body_html:
-                part2 = MimeText(body_html, 'html')
+                part2 = MIMEText(body_html, 'html')
                 msg.attach(part2)
             
             # Send email

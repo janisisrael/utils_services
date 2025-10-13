@@ -29,28 +29,41 @@
         }
         
         .header {
-            background-image: linear-gradient(195deg, #667eea 0%, #764ba2 100%) !important;
+            background: linear-gradient(45deg, #335bd6, #27489d, #1e3a8a, #3b59b1);
             padding: 20px;
-            display: flex;
-            align-items: center;
+            /* display: flex; */
+            /* align-items: center !important; */
             gap: 15px;
             color: #ffffff;
-            flex-direction: column;
-            text-align: center;
+            /* flex-direction: column !important; */
+            /* text-align: center !important; */
+            display: inline-block !important;
+            width: 100% !important;
         }
         
         .header img {
             max-width: 50px;
             height: auto;
+            margin: 0 auto;
+            width: 100%;
+            display: inline-block;
         }
         
         .header h1 {
             font-size: 20px;
             font-weight: 700;
             margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: inline-block;
+            width: 100% !important;
+            padding: 0px !important;
+            margin: 0px !important;
+        }
+        .header h6 {
+            font-size: 14px;
+            font-weight: 400;
+            margin: 5px 0 0 0;
+            color: #ffffff;
+            width: 100%;
         }
         
         .icon {
@@ -356,11 +369,10 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <img src="https://www.thesantris.com/img/thesantris.d8cb461c.png" alt="The Santris">
-            <h1>
-                Your Lottery Journey Starts Now!
-            </h1>
+        <div class="header" style="background: linear-gradient(45deg, #335bd6, #27489d, #1e3a8a, #3b59b1); padding: 20px; display: flex; align-items: center; gap: 15px; color: #ffffff; flex-direction: column; text-align: center;">
+            <img src="https://www.thesantris.com/img/thesantris.d8cb461c.png" alt="The Santris" style="max-width: 50px; height: auto;">
+            <h1 style="font-size: 20px; font-weight: 700; margin: 10px 0; color: #ffffff;">THESANTRIS</h1>
+            <h6 style="font-size: 14px; font-weight: 400; margin: 5px 0 0 0; color: #ffffff;">The secure and transparent hub for your platforms.</h6>
         </div>
         
         <div class="content">
